@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Utils\MovieSync;
+use Illuminate\Support\Facades\Log;
 
 class SyncMovies extends Command {
 
@@ -36,7 +37,11 @@ class SyncMovies extends Command {
      * @return mixed
      */
     public function handle() {
-        MovieSync::sync();
+        try {
+            MovieSync::sync();
+        } catch (\ErrorException $e) {
+            Log::warning("Couldn't retrieve movies. Detailed Log: " . $e->getMessage());
+        }
     }
 
 }

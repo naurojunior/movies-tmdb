@@ -3,14 +3,21 @@
 namespace App\Utils;
 
 use App\Utils\Interfaces\MovieFetcherInterface;
+use App\Utils\Factories\GenreFactory;
 
 class TMDBMovieFetcher implements MovieFetcherInterface {
+
+    public static function fetchGenres() {
+        $genres = TMDBMovieFetcher::requestGenres();
+        return array_map(function ($genre) {
+            return GenreFactory::fromJSON($genre);
+        }, $genres);
+    }
 
     /**
      * @return JSON of movies
      */
     public static function fetch() {
-        $genres = TMDBMovieFetcher::requestGenres();
         $movies = TMDBMovieFetcher::requestMovies();
 
         return TMDBMovieFetcher::addGenresToMoviesArray($movies, $genres);
@@ -44,14 +51,7 @@ class TMDBMovieFetcher implements MovieFetcherInterface {
      * @return type
      */
     private static function requestGenres() {
-        $genres = [];
-
-        $jsonGenres = TMDBMovieFetcher::execCURL("/genre/movie/list")->genres;
-
-        foreach ($jsonGenres as $jsonGenre) {
-            $genres[$jsonGenre->id] = $jsonGenre->name;
-        }
-        return $genres;
+        return TMDBMovieFetcher::execCURL("/genre/movie/list")->genres;
     }
 
     /**

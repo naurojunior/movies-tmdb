@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Utils;
-use Interfaces\MovieFilterInterface;
+
+use App\Utils\Interfaces\MovieFilterInterface;
 
 class MovieFilter implements MovieFilterInterface {
 
@@ -15,10 +16,11 @@ class MovieFilter implements MovieFilterInterface {
         if (!$filters || !$filters['title']) {
             return $movies;
         }
-
-        return array_filter($movies, function ($movie) use ($filters) {
+        $filteredResults = array_filter($movies, function ($movie) use ($filters) {
             return (strpos(strtolower($movie->title), strtolower($filters['title'])) !== false);
         });
+
+        return array_values($filteredResults);
     }
 
 }

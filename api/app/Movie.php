@@ -2,6 +2,10 @@
 
 namespace App;
 
+use App\Utils\MovieFilter;
+use Illuminate\Support\Facades\Redis;
+use App\Utils\MovieFactory;
+
 class Movie {
 
     function __construct($title, $poster, $backdrop, $popularity, $id) {
@@ -13,8 +17,8 @@ class Movie {
     }
 
     public static function all($filters = array()) {
-        return MovieFilter::filter(Redis::get('movies'), $filters);
+        $movieArray = MovieFactory::JSONStringToMovieArray(Redis::get('movies'));
+        return MovieFilter::filter($movieArray, $filters);
     }
-    
 
 }

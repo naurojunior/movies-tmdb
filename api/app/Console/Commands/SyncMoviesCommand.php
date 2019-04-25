@@ -37,11 +37,11 @@ class SyncMoviesCommand extends Command {
      * @return mixed
      */
     public function handle() {
-//        try {
+        try {
             MovieSync::sync();
-//        } catch (\ErrorException $e) {
-//            Log::warning("Couldn't retrieve movies. Detailed Log: " . $e->getMessage());
-//        }
+        } catch (\ErrorException $e) {
+            Log::warning("Couldn't retrieve movies. Detailed Log: " . $e->getMessage());
+        }
     }
 
 }

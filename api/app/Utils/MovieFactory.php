@@ -8,11 +8,12 @@ class MovieFactory {
 
     /**
      * Convert a single JSON movie to a Movie
-     * @param type $json
+     * @param type $movieJSON
      * @return Movie
      */
-    public static function JSONToMovie($json) {
-        return new Movie($json->title, $json->poster, $json->backdrop, $json->popularity, $json->id);
+    public static function JSONToMovie($movieJSON) {
+        return new Movie(['title' => $movieJSON->title, 'backdrop' => $movieJSON->backdrop_path, 'poster' => $movieJSON->poster_path, 'id' => $movieJSON->id,
+            'genres' => $movieJSON->genres]);
     }
 
     /**

@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Redis;
 class MovieSync {
 
     public static function sync(){
-        Redis::set('movies', TMDBMovieFetcher::fetch());
+        $movies = TMDBMovieFetcher::fetch();
+        
+        Redis::set('movies', json_encode($movies));
     }
     
 }

@@ -4,22 +4,31 @@ namespace App\Utils;
 
 use Illuminate\Support\Facades\Redis;
 use App\Genre;
+use App\Movie;
+use App\Utils\Factories\GenreFactory;
+use App\Utils\Factories\MovieFactory;
 
 class APISync {
 
     public static function genreSync() {
-        $genres = TMDBMovieFetcher::fetchGenres();
+        $genresJSON = TMDBMovieFetcher::fetchGenres();
+        $genres = GenreFactory::fromJSONArray($genresJSON);
 
-        Genre::truncate();
+        Genre::query()->delete();
         foreach ($genres as $genre) {
             $genre->save();
         }
     }
 
-    public static function sync() {
-        $movies = TMDBMovieFetcher::fetch();
+    public static function movieSync() {
+        $moviesJSON = TMDBMovieFetcher::fetchMovies();
+        $movies = MovieFactory::fromJSONArray($moviesJSON);
 
-        Redis::set('movies', json_encode($movies));
+        Movie::query()->delete();
+        foreach ($movies as $movie) {
+            $movie->save();
+        }
+
     }
 
 }

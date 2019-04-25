@@ -14,7 +14,8 @@ class MovieController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
-        return response()->json(Movie::all(['title' => $request->input('title')]));
+        $title = $request->input('title');
+        return Movie::where('title', 'LIKE', '%' . $title . '%')->get();
     }
 
 }

@@ -4,5 +4,5 @@ namespace App\Utils\Interfaces;
 
 interface MovieFetcherInterface {
 
-    public static function fetch();
+    public static function fetchMovies();
 }

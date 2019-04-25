@@ -11,4 +11,8 @@ class Genre extends Model {
 
     protected $fillable = ['id', 'name'];
 
+    public function movies() {
+        return $this->belongsToMany('App\Movie');
+    }
+
 }

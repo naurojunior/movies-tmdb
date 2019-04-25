@@ -3,37 +3,26 @@
 namespace App\Utils;
 
 use App\Utils\Interfaces\MovieFetcherInterface;
-use App\Utils\Factories\GenreFactory;
 
 class TMDBMovieFetcher implements MovieFetcherInterface {
 
+    /**
+     * @return JSON of genres
+     */
     public static function fetchGenres() {
-        $genres = TMDBMovieFetcher::requestGenres();
-        return array_map(function ($genre) {
-            return GenreFactory::fromJSON($genre);
-        }, $genres);
+        return TMDBMovieFetcher::execCURL("/genre/movie/list")->genres;
     }
 
     /**
      * @return JSON of movies
      */
-    public static function fetch() {
-        $movies = TMDBMovieFetcher::requestMovies();
-
-        return TMDBMovieFetcher::addGenresToMoviesArray($movies, $genres);
-    }
-
-    /**
-     * Return all movies as JSON
-     * @return type
-     */
-    private static function requestMovies() {
+    public static function fetchMovies() {
         $moviesJSON = TMDBMovieFetcher::requestMoviePage();
 
         $movies = $moviesJSON->results;
-        for ($page = 2; $page <= $moviesJSON->total_pages; $page++) {
-            $movies = array_merge($movies, TMDBMovieFetcher::requestMoviePage($page)->results);
-        }
+//        for ($page = 2; $page <= $moviesJSON->total_pages; $page++) {
+//            $movies = array_merge($movies, TMDBMovieFetcher::requestMoviePage($page)->results);
+//        }
 
         return $movies;
     }
@@ -44,14 +33,6 @@ class TMDBMovieFetcher implements MovieFetcherInterface {
      */
     private static function requestMoviePage($page = 1) {
         return TMDBMovieFetcher::execCURL("/movie/upcoming", "&language=en-US&page=" . $page);
-    }
-
-    /**
-     * Request Genres from TMDB
-     * @return type
-     */
-    private static function requestGenres() {
-        return TMDBMovieFetcher::execCURL("/genre/movie/list")->genres;
     }
 
     /**
@@ -70,32 +51,6 @@ class TMDBMovieFetcher implements MovieFetcherInterface {
         curl_close($ch);
         $resultset = json_decode($output);
         return $resultset;
-    }
-
-    /**
-     * Add genres to the JSON return
-     * @param type $movies
-     * @param type $genres
-     * @return type
-     */
-    private static function addGenresToMoviesArray($movies, $genres) {
-        return array_map(function ($movie) use ($genres) {
-            $movieGenre = TMDBMovieFetcher::getGenresOfMovie($movie, $genres);
-            $movie->genres = $movieGenre;
-            return $movie;
-        }, $movies);
-    }
-
-    /**
-     * Search the names of the genres of one movie
-     * @param type $movie
-     * @param type $genres
-     * @return type
-     */
-    private static function getGenresOfMovie($movie, $genres) {
-        return array_map(function ($genresId) use ($genres) {
-            return $genres[$genresId];
-        }, $movie->genre_ids);
     }
 
 }

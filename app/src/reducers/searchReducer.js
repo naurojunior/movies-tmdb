@@ -11,10 +11,9 @@ export const searchReducer = (state = initialState, action) => {
         movies: action.movies
       };
     case LOAD_MOVIES:
-      console.log('oi')
       return {
         ...state,
-        movies: action.movies
+        movies: action.payload
       };
     default:
       return state;

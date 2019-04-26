@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { clickSearch } from '../actions';
+import { loadMovies } from '../actions';
 
 class MovieSearch extends Component {
+
   state = {
     inputValue: ''
   }
@@ -11,13 +12,13 @@ class MovieSearch extends Component {
   inputChange = event => {
     this.setState({
       inputValue: event.target.value
-    })
+    });
   }
 
   render() {
-    const { clickSearch, movies } = this.props;
     const { inputValue } = this.state;
-
+    const { loadMovies } = this.props;
+    
     return (
         <div className="container">
           <div className="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -27,7 +28,7 @@ class MovieSearch extends Component {
               value={inputValue}
               autoFocus
             />
-            <button className="btn btn-primary" onClick={() => clickSearch(inputValue)}>
+            <button className="btn btn-primary" onClick={() => loadMovies(inputValue)}>
               Filtrar
             </button>
           </div>
@@ -42,6 +43,6 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ clickSearch }, dispatch);
+  bindActionCreators({ loadMovies }, dispatch);
 
 export default connect(mapStateToProps,mapDispatchToProps)(MovieSearch);

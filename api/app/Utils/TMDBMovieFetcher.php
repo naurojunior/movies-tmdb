@@ -7,20 +7,16 @@ use App\Utils\Interfaces\MovieFetcherInterface;
 class TMDBMovieFetcher implements MovieFetcherInterface {
 
     /**
-     * @return JSON of movies
+     * @return JSON of genres
      */
-    public static function fetch() {
-        $genres = TMDBMovieFetcher::requestGenres();
-        $movies = TMDBMovieFetcher::requestMovies();
-
-        return TMDBMovieFetcher::addGenresToMoviesArray($movies, $genres);
+    public static function fetchGenres() {
+        return TMDBMovieFetcher::execCURL("/genre/movie/list")->genres;
     }
 
     /**
-     * Return all movies as JSON
-     * @return type
+     * @return JSON of movies
      */
-    private static function requestMovies() {
+    public static function fetchMovies() {
         $moviesJSON = TMDBMovieFetcher::requestMoviePage();
 
         $movies = $moviesJSON->results;
@@ -40,21 +36,6 @@ class TMDBMovieFetcher implements MovieFetcherInterface {
     }
 
     /**
-     * Request Genres from TMDB
-     * @return type
-     */
-    private static function requestGenres() {
-        $genres = [];
-
-        $jsonGenres = TMDBMovieFetcher::execCURL("/genre/movie/list")->genres;
-
-        foreach ($jsonGenres as $jsonGenre) {
-            $genres[$jsonGenre->id] = $jsonGenre->name;
-        }
-        return $genres;
-    }
-
-    /**
      * Fetch the results of TMBD API
      * @param type $endPoint
      * @param type $extraParams
@@ -70,32 +51,6 @@ class TMDBMovieFetcher implements MovieFetcherInterface {
         curl_close($ch);
         $resultset = json_decode($output);
         return $resultset;
-    }
-
-    /**
-     * Add genres to the JSON return
-     * @param type $movies
-     * @param type $genres
-     * @return type
-     */
-    private static function addGenresToMoviesArray($movies, $genres) {
-        return array_map(function ($movie) use ($genres) {
-            $movieGenre = TMDBMovieFetcher::getGenresOfMovie($movie, $genres);
-            $movie->genres = $movieGenre;
-            return $movie;
-        }, $movies);
-    }
-
-    /**
-     * Search the names of the genres of one movie
-     * @param type $movie
-     * @param type $genres
-     * @return type
-     */
-    private static function getGenresOfMovie($movie, $genres) {
-        return array_map(function ($genresId) use ($genres) {
-            return $genres[$genresId];
-        }, $movie->genre_ids);
     }
 
 }

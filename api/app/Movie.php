@@ -2,18 +2,27 @@
 
 namespace App;
 
-use App\Utils\MovieFilter;
-use Illuminate\Support\Facades\Redis;
-use App\Utils\MovieFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Movie extends Model {
 
-    protected $fillable = ['title', 'backdrop', 'poster', 'release_date', 'popularity', 'id', 'genres'];
+    protected $fillable = ['title', 'backdrop_path', 'poster_path', 'release_date', 'popularity', 'id'];
+    protected $hidden = ['created_at', 'updated_at'];
+    public $incrementing = false;
+    
+    //Avoid Laravel trying to save to database 
+    protected $genre_ids;
 
-    public static function all($filters = array()) {
-        $movieArray = MovieFactory::JSONStringToMovieArray(Redis::get('movies'));
-        return MovieFilter::filter($movieArray, $filters);
+    public function genres() {
+        return $this->belongsToMany('App\Genre');
+    }
+   
+    public function setGenreIds($ids = []) {
+        $this->genre_ids = $ids;
+    }
+
+    public function getGenreIds() {
+        return $this->genre_ids;
     }
 
 }

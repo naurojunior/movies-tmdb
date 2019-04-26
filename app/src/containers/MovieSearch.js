@@ -21,16 +21,21 @@ class MovieSearch extends Component {
     
     return (
         <div className="container">
-          <div className="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+          <div className="row form-group pt-md-5 pb-md-4">
+          <div className="text-center col-md-9">
             <input
+              className="form-control"
               onChange={this.inputChange}
               type='text'
               value={inputValue}
               autoFocus
             />
-            <button className="btn btn-primary" onClick={() => loadMovies(inputValue)}>
-              Filtrar
-            </button>
+            </div>
+            <div className="col-md-3">
+              <button className="btn btn-primary b" onClick={() => loadMovies(inputValue)}>
+                Filter
+              </button>
+          </div>
           </div>
       </div>
     );

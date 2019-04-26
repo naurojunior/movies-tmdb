@@ -9,6 +9,7 @@ class MovieList extends Component {
   render() {
     const { movies } = this.props;
 
+
     return (
       <div className="container">
         <div className="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -16,7 +17,7 @@ class MovieList extends Component {
             {movies.map((movie) =>
               <div className="col-md-3 pt-md-5" key={movie.id}>
                 <Link to={`/show/${movie.id}`} ><h6>{movie.title}</h6>
-                  <img className="img-fluid" src={ "https://image.tmdb.org/t/p/w500" + ((movie.poster_path) ? movie.poster_path : movie.backdrop_path) } />
+                  <img className="img-fluid" src={ `https://image.tmdb.org/t/p/w500/${movie.poster_path}` } />
                 </Link>
               </div>
             )}

@@ -23,10 +23,11 @@ class APISync {
     public static function movieSync() {
         $moviesJSON = TMDBMovieFetcher::fetchMovies();
         $movies = MovieFactory::fromJSONArray($moviesJSON);
-
+        
         Movie::query()->delete();
         foreach ($movies as $movie) {
             $movie->save();
+            $movie->genres()->attach($movie->getGenreIds());
         }
 
     }

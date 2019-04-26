@@ -17,9 +17,10 @@ class CreateMoviesTable extends Migration {
             $table->primary('id');
             $table->string('title');
             $table->float('popularity');
-            $table->string('poster_path');
-            $table->string('backdrop_path');
+            $table->string('poster_path')->nullable();
+            $table->string('backdrop_path')->nullable();
             $table->date('release_date');
+            $table->string('overview')->nullable();
             $table->timestamps();
         });
     }

@@ -20,9 +20,9 @@ class TMDBMovieFetcher implements MovieFetcherInterface {
         $moviesJSON = TMDBMovieFetcher::requestMoviePage();
 
         $movies = $moviesJSON->results;
-//        for ($page = 2; $page <= $moviesJSON->total_pages; $page++) {
-//            $movies = array_merge($movies, TMDBMovieFetcher::requestMoviePage($page)->results);
-//        }
+        for ($page = 2; $page <= $moviesJSON->total_pages; $page++) {
+            $movies = array_merge($movies, TMDBMovieFetcher::requestMoviePage($page)->results);
+        }
 
         return $movies;
     }

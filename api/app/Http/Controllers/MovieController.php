@@ -15,7 +15,7 @@ class MovieController extends Controller {
      */
     public function index(Request $request) {
         $title = $request->input('title');
-        return Movie::where('title', 'LIKE', '%' . $title . '%')->get();
+        return Movie::with('Genres')->where('title', 'LIKE', '%' . $title . '%')->get();
     }
 
 }

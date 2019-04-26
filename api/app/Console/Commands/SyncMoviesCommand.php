@@ -37,12 +37,12 @@ class SyncMoviesCommand extends Command {
      * @return mixed
      */
     public function handle() {
-//        try { 
+        try { 
             APISync::genreSync();
             APISync::movieSync();
-//        } catch (\ErrorException $e) {
-//            Log::warning("Sync error. Detailed Log: " . $e->getMessage());
-//        }
+        } catch (\ErrorException $e) {
+            Log::warning("Sync error. Detailed Log: " . $e->getMessage());
+        }
     }
 
 }

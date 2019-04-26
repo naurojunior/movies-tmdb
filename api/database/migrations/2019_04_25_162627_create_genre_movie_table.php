@@ -12,7 +12,7 @@ class CreateGenresMoviesTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('genres_movies', function (Blueprint $table) {
+        Schema::create('genre_movie', function (Blueprint $table) {
             $table->integer('genre_id')->unsigned()->nullable();
             $table->foreign('genre_id')->references('id')
                     ->on('genres')->onDelete('cascade');
@@ -31,7 +31,7 @@ class CreateGenresMoviesTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('genres_movies');
+        Schema::dropIfExists('genre_movie');
     }
 
 }

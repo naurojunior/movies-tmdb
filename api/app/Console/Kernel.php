@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel {
      * @var array
      */
     protected $commands = [
-            //
+            Commands\SyncMoviesCommand::class,
     ];
 
     /**
@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel {
      * @return void
      */
     protected function schedule(Schedule $schedule) {
-        $schedule->call('sync:movies')->everyThirtyMinutes();
+        $schedule->call('App\Console\Commands\SyncMoviesCommand@handle')->everyMinute();
     }
 
     /**

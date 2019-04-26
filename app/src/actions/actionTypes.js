@@ -1,2 +1,3 @@
 export const MOVIE_LIST_SEARCH_TYPE = 'MOVIE_LIST_SEARCH_TYPE';
 export const LOAD_MOVIES = 'LOAD_MOVIES';
+export const FIND_MOVIE = 'FIND_MOVIE';

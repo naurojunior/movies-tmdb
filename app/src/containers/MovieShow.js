@@ -22,6 +22,7 @@ class MovieShow extends Component {
                     )}
                     </ul>
                 </div>
+                <p className="text-justify pt-md-3">Release Date: { movie.release_date }</p>
                 <p className="text-justify pt-md-3">{ movie.overview }</p>
                 <img className="img-fluid" src={ `https://image.tmdb.org/t/p/w500/${movie.backdrop_path}` } />
             </div>

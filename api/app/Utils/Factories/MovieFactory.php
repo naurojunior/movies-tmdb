@@ -15,7 +15,7 @@ class MovieFactory {
         $movie = new Movie(['title' => $movieJSON->title,
             'backdrop_path' => $movieJSON->backdrop_path, 'popularity' => $movieJSON->popularity,
             'release_date' => $movieJSON->release_date,
-            'poster_path' => $movieJSON->poster_path, 'id' => $movieJSON->id]);
+            'poster_path' => $movieJSON->poster_path, 'id' => $movieJSON->id, 'overview' => $movieJSON->overview]);
         
         $movie->setGenreIds($movieJSON->genre_ids);
         return $movie;

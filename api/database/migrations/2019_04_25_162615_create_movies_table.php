@@ -20,6 +20,7 @@ class CreateMoviesTable extends Migration {
             $table->string('poster_path')->nullable();
             $table->string('backdrop_path')->nullable();
             $table->date('release_date');
+            $table->string('overview')->nullable();
             $table->timestamps();
         });
     }

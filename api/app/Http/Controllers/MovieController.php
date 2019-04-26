@@ -17,5 +17,9 @@ class MovieController extends Controller {
         $title = $request->input('title');
         return Movie::with('Genres')->where('title', 'LIKE', '%' . $title . '%')->get();
     }
+	
+	public function show($id){
+		return Movie::with('Genres')->find($id);
+	}
 
 }

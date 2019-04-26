@@ -14,4 +14,5 @@ use Illuminate\Http\Request;
 */
 Route::group(['prefix' => 'v1'], function () {
     Route::get('movies', 'MovieController@index');
+    Route::get('movies/show/{id}', 'MovieController@show');
 });

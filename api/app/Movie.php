@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Movie extends Model {
 
-    protected $fillable = ['title', 'backdrop_path', 'poster_path', 'release_date', 'popularity', 'id'];
+    protected $fillable = ['title', 'backdrop_path', 'poster_path', 'release_date', 'popularity', 'id', 'overview'];
     protected $hidden = ['created_at', 'updated_at'];
     public $incrementing = false;
     

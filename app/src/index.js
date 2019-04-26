@@ -10,12 +10,13 @@ import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 
 import MovieList from './containers/MovieList';
 import MovieShow from './containers/MovieShow'; 
+import MovieContainer from './containers/MovieContainer';
 
 ReactDOM.render(
     <Provider store={Store}>
       <Router>
-        <main role="main" class="container">
-          <Route exact path="/" component={MovieList} />
+        <main role="main" className="container">
+          <Route exact path="/" component={MovieContainer} />
           <Route path="/show/:id" component={MovieShow} />
         </main>
       </Router>

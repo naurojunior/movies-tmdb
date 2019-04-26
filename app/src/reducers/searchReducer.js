@@ -1,6 +1,6 @@
-import { MOVIE_LIST_SEARCH_TYPE } from '../actions/actionTypes';
+import { MOVIE_LIST_SEARCH_TYPE, LOAD_MOVIES } from '../actions/actionTypes';
 const initialState = {
-  movies: 'Teste'
+  movies: []
 };
 
 export const searchReducer = (state = initialState, action) => {
@@ -10,7 +10,14 @@ export const searchReducer = (state = initialState, action) => {
         ...state,
         movies: action.movies
       };
+    case LOAD_MOVIES:
+      console.log('oi')
+      return {
+        ...state,
+        movies: action.movies
+      };
     default:
       return state;
   }
 };
+
